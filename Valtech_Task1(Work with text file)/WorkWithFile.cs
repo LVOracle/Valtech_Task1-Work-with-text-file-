@@ -148,6 +148,7 @@ namespace Valtech_Task1_Work_with_text_file_
         public void GenerateDictionaryOfAllWords()
         {
             int stringLine = 1;
+            int position = 1;
             StringBuilder tmp = new StringBuilder(25);
             for (int i = 0; i < CopyContent.Length; ++i)
             {
@@ -166,16 +167,20 @@ namespace Valtech_Task1_Work_with_text_file_
                     CopyContent[i].Equals(':'))
                 {
                     if (CopyContent[i].Equals('\n'))
+                    {
                         ++stringLine;
-                    var startIndex = i + 1 - tmp.Length;
+                        position = 1;
+                    }
+                    var startIndex = i - tmp.Length;
                     if(tmp.ToString() != "")
-                        AllWords.Add(startIndex,new List<string>(){tmp.ToString(),stringLine.ToString()});
+                        AllWords.Add(startIndex,new List<string>(){tmp.ToString(),stringLine.ToString(),(position - tmp.Length).ToString()});
                     tmp.Clear();
                 }
                 else
                 {
                     tmp.Append(CopyContent[i]);
                 }
+                ++position;
             }
             PrintFullDictionaryWithStatistic();
         }
@@ -186,7 +191,7 @@ namespace Valtech_Task1_Work_with_text_file_
         {
             foreach (var dic in AllWords)
             {
-                Console.WriteLine($"Position: {dic.Key}\t Line: {dic.Value[1]}\t Word: \'{dic.Value[0]}\'");
+                Console.WriteLine($"Position: {dic.Value[2]}\t Index: {dic.Key}\t Line: {dic.Value[1]}\t Word: \'{dic.Value[0]}\'");
             }
         }
         /// <summary>
