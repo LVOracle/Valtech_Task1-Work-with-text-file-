@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,22 +12,27 @@ namespace Valtech_Task1_Work_with_text_file_
         /// Path to the file
         /// </summary>
         public string Path { get; set; }
+
         /// <summary>
         /// General content of the file
         /// </summary>
         public string Content { get; set; }
+
         /// <summary>
         /// Copy of the general content
         /// </summary>
         public string CopyContent { get; set; }
+
         /// <summary>
         /// List of the start indexes of each searching words
         /// </summary>
         public List<int> Indexes { get; set; }
+
         /// <summary>
         /// Dictionary for all words in the text
         /// </summary>
-        public Dictionary<int,List<string>> AllWords { get; set; }
+        public Dictionary<int, List<string>> AllWords { get; set; }
+
         /// <summary>
         /// Initialize path
         /// </summary>
@@ -38,15 +42,16 @@ namespace Valtech_Task1_Work_with_text_file_
             Path = path ?? throw new ArgumentNullException("Path can't be null.");
             AllWords = new Dictionary<int, List<string>>(1000);
         }
+
         /// <summary>
         /// Reading from file and initialize content
         /// </summary>
-        public void ReadFile()
+        public async void ReadFile()
         {
             try
             {
                 using StreamReader sr = new StreamReader(Path);
-                Content = sr.ReadToEnd();
+                Content = await sr.ReadToEndAsync();
                 Indexes = new List<int>(Content.Length);
                 CopyContent = Content;
                 CopyContent = CopyContent.ToLower();
@@ -57,11 +62,21 @@ namespace Valtech_Task1_Work_with_text_file_
             }
         }
         /// <summary>
+        /// Write starts indexes to the file which we try to find
+        /// </summary>
+        /// <param name="indexes"></param>
+        /// <param name="word"></param>
+        public void WriteToFile(List<int> indexes,string word)
+        {
+            indexes.WriteToFileList(word);
+        }
+        /// <summary>
         /// Find the word in the text and remember start position of each word
         /// </summary>
         /// <param name="word"></param>
         public void SearchWord(string word)
             {
+       
             StringBuilder tmp = new StringBuilder(25);
             word = word.ToLower();
             for (int i = 0; i < CopyContent.Length; ++i)
@@ -150,7 +165,7 @@ namespace Valtech_Task1_Work_with_text_file_
             int stringLine = 1;
             int position = 1;
             StringBuilder tmp = new StringBuilder(25);
-            for (int i = 0; i < CopyContent.Length; ++i)
+            for (int i = 0; i < CopyContent?.Length; ++i)
             {
                 if (CopyContent[i].Equals(' ') ||
                     CopyContent[i].Equals('\n') ||

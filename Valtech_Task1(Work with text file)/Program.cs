@@ -9,7 +9,7 @@ namespace Valtech_Task1_Work_with_text_file_
         static void Main(string[] args)
         {
             string word = " ";
-            WorkWithFile file = new WorkWithFile(@"C:\Users\vladyslav.levchenko\Desktop\Text.txt");
+            WorkWithFile file = new WorkWithFile(@"C:\Users\vladyslav.levchenko\Desktop\Text.txt"); // <--- change file path here
             file.ReadFile();
             file.GenerateDictionaryOfAllWords();
             Console.WriteLine();
@@ -25,7 +25,12 @@ namespace Valtech_Task1_Work_with_text_file_
                     Console.WriteLine("Bye-bye");
                     break;
                 }
-                if (word != null) file.SearchWord(word.Trim());
+
+                if (word != null)
+                {
+                    file.SearchWord(word.Trim());
+                    file.WriteToFile(file.Indexes,word);
+                }
                 file.Indexes = new List<int>(file.Content.Length);
                 file.AllWords = new Dictionary<int, List<string>>(file.Content.Length);
             }
