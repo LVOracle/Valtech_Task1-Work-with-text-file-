@@ -29,7 +29,7 @@ namespace Valtech_Task1_Work_with_text_file_
                 if (word != null)
                 {
                     file.SearchWord(word.Trim());
-                    file.WriteToFile(file.Indexes,word);
+                    //file.WriteToFile(file.Indexes,word);
                 }
                 file.Indexes = new List<int>(file.Content.Length);
                 file.AllWords = new Dictionary<int, List<string>>(file.Content.Length);
